@@ -1,9 +1,15 @@
 import sqlite3
 import os
+import pyperclip
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox,scrolledtext,font
 from tkinter.ttk import *
 from imdb import add_movies,delete_movies,show_details
+import fontawesome as fa
+
+def copy(cont):
+    k= cont.get("1.0","end-1c")
+    pyperclip.copy(k)
 
 def add_to_list():
     global movies
@@ -38,7 +44,36 @@ def show():
     if (query=="Select A Movie"):
         messagebox.showerror(title="Select a movie!!", message="Please select a movie from the combobox and try again!!")
     else:
-        pass
+        det = show_details(query)
+        if det==0:
+            return
+        else:
+            info = tk.Toplevel()
+            title= query+" : Info"
+            info.title(title)
+            info.geometry("300x260")
+            if ("nt" == os.name):
+                info.iconbitmap("./icon.ico")
+            info.resizable(0, 0)
+            canvas = tk.Canvas(info, width=300, height=260, bg="#070769")
+            canvas.pack(fill=tk.BOTH)
+            content = scrolledtext.ScrolledText(
+            info, wrap=tk.WORD, height=12, width=27, font="Arial 12", relief="groove", borderwidth=0)
+            content.place(x=20, y=20)
+            cont = '''Name: {}
+Year: {}
+Star: {}
+Ratings: {}
+Watchtime: {}
+Release Date and Location: {}
+Genre: {}
+Summary: {}
+            '''.format(det[0],det[1],det[2],det[3],det[4],det[5],det[6],det[7])
+            content.insert (tk.END, cont)
+            cpy = tk.Button(info,text =fa.icons['copy'], font="Arial 20",
+                command=lambda: copy(content), activebackground='#343434',background="#ffffff", activeforeground='#ffffff', borderwidth=0)
+            cpy.place (x=220,y=22)
+            
 
 def entered1(event):
     add.configure(

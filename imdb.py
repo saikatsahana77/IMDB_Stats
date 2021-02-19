@@ -78,6 +78,17 @@ def delete_movies(movies):
         pass
 
 
-def show_details():
-    pass
+def show_details(query):
+    try:
+        conn = sqlite3.connect('movies.db')
+        c = conn.cursor()
+        c.execute(r"SELECT * FROM MOVIES WHERE NAME= :name",{
+            'name': query
+        })
+        k=c.fetchone()
+        conn.commit()
+        conn.close
+        return list(k)
+    except:
+        return 0
 
