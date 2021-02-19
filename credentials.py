@@ -1,1 +1,1 @@
-key = '41d19e7fa93499c77a2eaa7e0733eb11'
+key = #type ypur API key here
