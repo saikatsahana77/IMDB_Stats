@@ -1,4 +1,4 @@
-# Voice Email Client
+# IMDB Stats GUI
 
 ## Usage Instructions :
 
